@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useContext } from 'react';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 
 import { Form } from '@unform/web';
@@ -12,22 +12,34 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import { getValidationErrors } from '../../utils/validation';
+import { AuthContext } from '../../context/AuthContext';
 
 import schema from '../../validations/SingInSchema';
+
+interface SignFormData {
+  email: string;
+  password: string;
+}
 
 const Signin: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback(async (data: object) => {
-    try {
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-      formRef.current?.setErrors({});
-    } catch (err) {
-      formRef.current?.setErrors(getValidationErrors(err));
-    }
-  }, []);
+  const { signIn } = useContext(AuthContext);
+
+  const handleSubmit = useCallback(
+    async (data: SignFormData) => {
+      try {
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+        formRef.current?.setErrors({});
+        signIn({ email: data.email, password: data.password });
+      } catch (err) {
+        formRef.current?.setErrors(getValidationErrors(err));
+      }
+    },
+    [signIn],
+  );
 
   return (
     <Container>
