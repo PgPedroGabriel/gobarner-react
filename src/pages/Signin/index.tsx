@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -32,6 +32,8 @@ const Signin: React.FC = () => {
 
   const { addToast } = useToast();
 
+  const history = useHistory();
+
   const handleSubmit = useCallback(
     async (data: SignFormData) => {
       try {
@@ -40,6 +42,8 @@ const Signin: React.FC = () => {
         });
         formRef.current?.setErrors({});
         await signIn({ email: data.email, password: data.password });
+
+        history.push('/');
       } catch (err) {
         if (err instanceof ValidationError) {
           return formRef.current?.setErrors(getValidationErrors(err));
@@ -52,7 +56,7 @@ const Signin: React.FC = () => {
         });
       }
     },
-    [addToast, signIn],
+    [addToast, history, signIn],
   );
 
   return (
