@@ -11,13 +11,14 @@ import { FormHandles } from '@unform/core';
 
 import logo from '../../assets/logo.svg';
 
-import { Container, Content, Background } from './styles';
+import { Container, Content, Background, AnimationContainer } from './styles';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import { getValidationErrors } from '../../utils/validation';
 import schema from '../../validations/SingUpSchema';
+import { Link } from 'react-router-dom';
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
@@ -37,39 +38,46 @@ const SignUp: React.FC = () => {
     <Container>
       <Background />
       <Content>
-        <img src={logo} alt="gobarber" />
+        <AnimationContainer>
+          <img src={logo} alt="gobarber" />
 
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <h1>Faça seu cadastro</h1>
-          <Input name="name" type="text" icon={FiUser} placeholder="Nome" />
-          <Input name="email" type="text" icon={FiMail} placeholder="E- mail" />
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <h1>Faça seu cadastro</h1>
+            <Input name="name" type="text" icon={FiUser} placeholder="Nome" />
+            <Input
+              name="email"
+              type="text"
+              icon={FiMail}
+              placeholder="E- mail"
+            />
 
-          <Input
-            name="phone"
-            icon={FiPhoneCall}
-            type="text"
-            placeholder="Celular"
-          />
+            <Input
+              name="phone"
+              icon={FiPhoneCall}
+              type="text"
+              placeholder="Celular"
+            />
 
-          <Input
-            name="password"
-            icon={FiLock}
-            type="password"
-            placeholder="Senha"
-          />
-          <Input
-            name="confirm_password"
-            icon={FiLock}
-            type="password"
-            placeholder="Confirmação de Senha"
-          />
-          <Button type="submit">Cadastrar</Button>
-        </Form>
+            <Input
+              name="password"
+              icon={FiLock}
+              type="password"
+              placeholder="Senha"
+            />
+            <Input
+              name="confirm_password"
+              icon={FiLock}
+              type="password"
+              placeholder="Confirmação de Senha"
+            />
+            <Button type="submit">Cadastrar</Button>
+          </Form>
 
-        <a href="">
-          <FiArrowLeft />
-          Voltar para LogOn
-        </a>
+          <Link to="/login">
+            <FiArrowLeft />
+            Voltar para Login
+          </Link>
+        </AnimationContainer>
       </Content>
     </Container>
   );
