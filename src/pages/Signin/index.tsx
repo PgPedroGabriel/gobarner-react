@@ -15,6 +15,7 @@ import Input from '../../components/Input';
 
 import { getValidationErrors } from '../../utils/validation';
 import { useAuth } from '../../hooks/AuthContext';
+import { useToast } from '../../hooks/ToastContext';
 
 import schema from '../../validations/SingInSchema';
 
@@ -28,6 +29,8 @@ const Signin: React.FC = () => {
 
   const { signIn } = useAuth();
 
+  const { addToast } = useToast();
+
   const handleSubmit = useCallback(
     async (data: SignFormData) => {
       try {
@@ -35,16 +38,20 @@ const Signin: React.FC = () => {
           abortEarly: false,
         });
         formRef.current?.setErrors({});
-        signIn({ email: data.email, password: data.password });
+        await signIn({ email: data.email, password: data.password });
       } catch (err) {
         if (err instanceof ValidationError) {
           formRef.current?.setErrors(getValidationErrors(err));
         }
 
-        //disparar toast
+        addToast({
+          type: 'error',
+          title: 'Erro na autenticação',
+          description: 'Falha ao realizar login, cheque as credenciais',
+        });
       }
     },
-    [signIn],
+    [signIn, addToast],
   );
 
   return (
