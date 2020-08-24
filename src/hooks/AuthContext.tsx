@@ -17,6 +17,7 @@ interface AuthContextData {
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
   recovery(email: string): Promise<void>;
+  resetPassword(password: string, token: string): Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -53,6 +54,13 @@ const AuthProvider: React.FC = ({ children }) => {
     });
   }, []);
 
+  const resetPassword = useCallback(async (password: string, token: string) => {
+    await api.post('reset-password', {
+      password,
+      token,
+    });
+  }, []);
+
   const signOut = useCallback(() => {
     localStorage.removeItem('@Gobarber:token');
     localStorage.removeItem('@Gobarber:user');
@@ -62,7 +70,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user: data.user, signIn, signOut, recovery }}
+      value={{ user: data.user, signIn, signOut, recovery, resetPassword }}
     >
       {children}
     </AuthContext.Provider>

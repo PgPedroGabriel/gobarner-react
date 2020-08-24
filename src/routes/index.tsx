@@ -6,6 +6,7 @@ import { Switch, BrowserRouter } from 'react-router-dom';
 import SignIn from '../pages/Signin';
 import SignUp from '../pages/Signup';
 import RecoveryPassword from '../pages/RecoveryPassword';
+import ResetPassword from '../pages/ResetPassword';
 
 import Route from './Route';
 
@@ -18,6 +19,7 @@ const Routes: React.FC = () => {
         <Route path="/login" component={SignIn} />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/recovery-password" component={RecoveryPassword} />
+        <Route path="/reset-password/:token" exact component={ResetPassword} />
         <Route path="/" isPrivate={true} exact component={Dashboard} />
       </Switch>
     </BrowserRouter>
