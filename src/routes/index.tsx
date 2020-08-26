@@ -20,7 +20,7 @@ const Routes: React.FC = () => {
         <Route path="/sign-up" component={SignUp} />
         <Route path="/recovery-password" component={RecoveryPassword} />
         <Route path="/reset-password/:token" exact component={ResetPassword} />
-        <Route path="/" isPrivate={true} exact component={Dashboard} />
+        <Route path="/" exact component={Dashboard} />
       </Switch>
     </BrowserRouter>
   );

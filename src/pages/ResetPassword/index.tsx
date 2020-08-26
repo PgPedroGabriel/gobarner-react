@@ -20,8 +20,8 @@ import { useToast } from '../../hooks/ToastContext';
 
 import schema from '../../validations/ResetPasswordSchema';
 
-interface SignFormData {
-  email: string;
+interface ResetFormData {
+  confirm_password: string;
   password: string;
 }
 
@@ -34,14 +34,20 @@ const ResetPassword: React.FC = () => {
   const { token } = useParams();
 
   const handleSubmit = useCallback(
-    async (data: SignFormData) => {
+    async (data: ResetFormData) => {
       try {
         await schema.validate(data, {
           abortEarly: false,
         });
+
         formRef.current?.setErrors({});
 
         await resetPassword(data.password, token);
+
+        addToast({
+          type: 'success',
+          title: 'Senha alterada com sucesso!',
+        });
       } catch (err) {
         if (err instanceof ValidationError) {
           return formRef.current?.setErrors(getValidationErrors(err));

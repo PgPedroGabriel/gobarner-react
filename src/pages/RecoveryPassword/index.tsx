@@ -20,9 +20,8 @@ import { useToast } from '../../hooks/ToastContext';
 
 import schema from '../../validations/RecoveryPasswordSchema';
 
-interface SignFormData {
+interface RecoveryFormData {
   email: string;
-  password: string;
 }
 
 const RecoveryPassword: React.FC = () => {
@@ -33,7 +32,7 @@ const RecoveryPassword: React.FC = () => {
   const { recovery } = useAuth();
 
   const handleSubmit = useCallback(
-    async (data: SignFormData) => {
+    async (data: RecoveryFormData) => {
       try {
         await schema.validate(data, {
           abortEarly: false,
