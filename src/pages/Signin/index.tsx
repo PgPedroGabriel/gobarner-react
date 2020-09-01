@@ -48,7 +48,6 @@ const Signin: React.FC = () => {
         if (err instanceof ValidationError) {
           return formRef.current?.setErrors(getValidationErrors(err));
         }
-
         addToast({
           type: 'error',
           title: 'Erro na autenticação',
@@ -67,7 +66,7 @@ const Signin: React.FC = () => {
 
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h1>Faça seu logon</h1>
-            <Input name="email" icon={FiMail} placeholder="E- mail" />
+            <Input name="email" icon={FiMail} placeholder="E-mail" />
             <Input
               name="password"
               icon={FiLock}
