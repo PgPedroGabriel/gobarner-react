@@ -29,7 +29,12 @@ export const Container = styled.div<ContainerProps>`
       border-color: #ff9000;
     `}
 
-   
+     ${props =>
+       props.isFilled &&
+       css`
+         color: #ff9000;
+       `}
+
 
   & + div {
     margin-top: 8px;
